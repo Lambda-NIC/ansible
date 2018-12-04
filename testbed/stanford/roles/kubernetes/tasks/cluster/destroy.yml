@@ -41,5 +41,10 @@
     path: /usr/local/bin/kubectl
     state: absent
 
+- name: remove /var/lib/kubelet/ directory
+  file:
+    path: /var/lib/kubelet/
+    state: absent
+
 - name: turn swap on
   command: swapon -a

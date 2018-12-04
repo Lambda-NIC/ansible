@@ -56,6 +56,11 @@
       - "--v=2"
   when: '"master" in k8s_nodes[inventory_hostname]["type"]'
 
+- name: create /var/lib/kubelet/ directory
+  file:
+    path: /var/lib/kubelet/
+    state: directory
+
 - name: upload kubelet's kubeconfig file
   template:
     src: roles/kubernetes/templates/kubelet.kubeconfig.j2
