@@ -1,0 +1,13 @@
+---
+
+- name: provision kubernetes cluster
+  hosts: mendel*
+  gather_facts: false
+  become: true
+
+  vars_files:
+    - "var/kubernetes/main.yml"
+    - "var/kubernetes/config/{{ configs }}.yml"
+
+  roles:
+    - kubernetes

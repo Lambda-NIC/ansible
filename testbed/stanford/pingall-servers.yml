@@ -1,0 +1,9 @@
+---
+
+- name: ping all hosts
+  hosts: mendel*
+  gather_facts: true
+
+  tasks:
+  - name: ping all mendel servers
+    ping:
