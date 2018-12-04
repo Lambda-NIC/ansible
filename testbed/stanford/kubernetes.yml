@@ -1,8 +1,8 @@
 ---
 
 - name: provision kubernetes cluster
-  hosts: mendel*
-  gather_facts: false
+  hosts: mendel1, mendel2
+  gather_facts: true
   become: true
 
   vars_files:

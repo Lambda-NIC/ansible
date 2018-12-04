@@ -1,0 +1,45 @@
+---
+
+- name: remove etcd container
+  docker_container:
+    name: etcd
+    state: absent
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove api server
+  docker_container:
+    name: apiserver
+    state: absent
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove controller manager
+  docker_container:
+    name: controller-manager
+    state: absent
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove scheduler
+  docker_container:
+    name: scheduler
+    state: absent
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove kubelet
+  docker_container:
+    name: kubelet
+    state: absent
+  when: '"minion" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove proxy
+  docker_container:
+    name: proxy
+    state: absent
+  when: '"minion" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: remove kubectl
+  file:
+    path: /usr/local/bin/kubectl
+    state: absent
+
+- name: turn swap on
+  command: swapon -a

@@ -1,0 +1,111 @@
+---
+
+- name: start etcd container
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    name: etcd
+    image: gcr.io/google_containers/etcd-amd64:{{ etcd_version }}
+    command:
+      - "/usr/local/bin/etcd"
+      - "--listen-client-urls=http://0.0.0.0:{{ etcd_port }}"
+      - "--advertise-client-urls=http://0.0.0.0:{{ etcd_port }}"
+      - "--data-dir={{ etcd_data_dir }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: start api server
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    name: apiserver
+    image: gcr.io/google_containers/hyperkube-amd64:v{{ k8s_version }}
+    command:
+      - "/hyperkube apiserver"
+      - "--insecure-bind-address=0.0.0.0"
+      - "--insecure-port={{ k8s_api_server_port }}"
+      - "--service-cluster-ip-range={{ k8s_api_server_service_cluster_ip_range }}"
+      - "--etcd-servers=http://localhost:{{ etcd_port }}"
+      - "--v=2"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: start controller manager
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    name: controller-manager
+    image: gcr.io/google_containers/hyperkube-amd64:v{{ k8s_version }}
+    command:
+      - "/hyperkube controller-manager"
+      - "--master=http://localhost:{{ k8s_api_server_port }}"
+      - "--v=2"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: start scheduler
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    name: scheduler
+    image: gcr.io/google_containers/hyperkube-amd64:v{{ k8s_version }}
+    command:
+      - "/hyperkube scheduler"
+      - "--master=http://localhost:{{ k8s_api_server_port }}"
+      - "--v=2"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: upload kubelet's kubeconfig file
+  template:
+    src: roles/kubernetes/templates/kubelet.kubeconfig.j2
+    dest: /var/lib/kubelet/kubeconfig
+  when: '"minion" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: turn swap off
+  command: swapoff -a
+
+- name: start kubelet
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    volumes:
+      - "/:/rootfs:ro"
+      - "/sys:/sys:ro"
+      - "/dev:/dev"
+      - "/var/lib/docker/:/var/lib/docker:rw"
+      - "/var/lib/kubelet/:/var/lib/kubelet:rw"
+      - "/var/run:/var/run:rw"
+    name: kubelet
+    image: gcr.io/google_containers/hyperkube-amd64:v{{ k8s_version }}
+    command:
+      - "/hyperkube kubelet"
+      - "--allow-privileged=true"
+      - "--containerized"
+      - "--enable-server"
+      - "--hostname-override={{ inventory_hostname }}"
+      - "--address=0.0.0.0"
+      - "--kubeconfig=/var/lib/kubelet/kubeconfig"
+      - "--v=2"
+  when: '"minion" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: start proxy
+  docker_container:
+    privileged: true
+    network_mode: host
+    pid_mode: host
+    name: proxy
+    image: gcr.io/google_containers/hyperkube-amd64:v{{ k8s_version }}
+    command:
+      - "/hyperkube proxy"
+      - "--master=http://{{ hostvars[k8s_master]['ansible_default_ipv4']['address'] }}:{{ k8s_api_server_port }}"
+      - "--v=2"
+  when: '"minion" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: get kubectl
+  get_url:
+    url: "{{ k8s_kubectl_url }}"
+    dest: /usr/local/bin/kubectl
+    mode: 0755
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'

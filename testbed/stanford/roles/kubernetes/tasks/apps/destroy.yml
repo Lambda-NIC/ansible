@@ -1,0 +1,19 @@
+---
+
+- name: remove apps' configs
+  file:
+    path: /tmp/k8s_app_{{ item.name }}.yml
+    state: absent
+  with_items: "{{ k8s_apps }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: delete apps' service
+  shell: kubectl --namespace={{ item.namespace }} delete service {{ item.name }}
+  with_items: "{{ k8s_apps }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+  failed_when: false
+
+- name: delete apps' deployment
+  shell: kubectl --namespace={{ item.namespace }} delete deployment {{ item.name }}
+  with_items: "{{ k8s_apps }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'

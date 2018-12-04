@@ -1,29 +1,21 @@
 ---
 
-k8s-app:
-#  - name: kubernetes-dashboard
+k8s_apps:
+#  - name: kubernetes-dashboard # https://raw.githubusercontent.com/kubernetes/dashboard/v1.8.0/src/deploy/recommended/kubernetes-dashboard.yaml
 #    namespace: kube-system
-#    policy: rr
   - name: hello-world
     namespace: default
-    policy: rr
 
-k8s-master:
-  node_id: 5
+k8s_master: mendel2
 
-k8s-node:
+k8s_nodes:
   mendel1:
     type: "minion"
-    master: "{{ master }}"
   mendel2:
-    type: "minion"
-    master: "{{ master }}"
+    type: "master:minion"
   mendel3:
     type: "minion"
-    master: "{{ master }}"
   mendel4:
     type: "minion"
-    master: "{{ master }}"
   mendel5:
-    type: "master:minion"
-    master: "{{ master }}"
+    type: "minion"

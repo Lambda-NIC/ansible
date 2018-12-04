@@ -1,59 +1,58 @@
 #---
-#
-#- name: remove bridge-utils
+
+- name: remove bridge-utils
+  become: true
+  apt:
+    name: bridge-utils
+    purge: yes
+    state: absent
+
+#- name: remove unzip
 #  become: true
 #  apt:
-#    name: bridge-utils
+#    name: unzip
 #    purge: yes
 #    state: absent
-#
-##- name: remove unzip
-##  become: true
-##  apt:
-##    name: unzip
-##    purge: yes
-##    state: absent
-#
+
 #- name: remove openvswitch-switch
 #  become: true
 #  apt:
 #    name: openvswitch-switch
 #    purge: yes
 #    state: absent
-#
+
 #- name: remove openvswitch-common
 #  become: true
 #  apt:
 #    name: openvswitch-common
 #    purge: yes
 #    state: absent
-#
-#- name: remove docker repository key if installed
-#  apt_key:
-#    id: "{{ docker_apt_key_id }}"
-#    keyserver: "{{ docker_apt_keyserver }}"
-#    state: absent
-#
-#- name: remove docker registry if available
-#  apt_repository:
-#    repo: "{{ docker_apt_repo }}"
-#    update_cache: yes
-#    state: absent
-#
-#- name: remove docker-engine
-#  apt:
-#    name: docker-engine
-#    purge: yes
-#    state: absent
-#
+
+- name: disable docker service
+  systemd:
+    name: docker
+    enabled: no
+    masked: no
+
+- name: stop docker service
+  systemd:
+    name: docker
+    state: stopped
+
+- name: remove docker
+  apt:
+    name: docker.io
+    purge: yes
+    state: absent
+
+- name: remove docker-py
+  pip:
+    name: docker-py
+    state: absent
+
 #- name: remove docker compose
 #  file:
 #    path: /usr/local/bin/docker-compose
-#    state: absent
-#
-#- name: remove docker-py
-#  pip:
-#    name: docker-py
 #    state: absent
 #
 #- name: remove python-pip

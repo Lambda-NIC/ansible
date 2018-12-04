@@ -1,0 +1,13 @@
+---
+
+- name: upload apps' configs
+  copy:
+    src: "{{ k8s_apps_base_dir }}/{{ item.name }}.yml"
+    dest: /tmp/k8s_app_{{ item.name }}.yml
+  with_items: "{{ k8s_apps }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: create apps
+  shell: kubectl --namespace={{ item.namespace }} apply -f /tmp/k8s_app_{{ item.name }}.yml
+  with_items: "{{ k8s_apps }}"
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'

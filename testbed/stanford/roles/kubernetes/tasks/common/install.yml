@@ -5,10 +5,10 @@
   apt:
     update_cache: yes
 
-#- name: install bridge-utils
-#  become: true
-#  apt:
-#    name: bridge-utils
+- name: install bridge-utils
+  become: true
+  apt:
+    name: bridge-utils
 
 #- name: install unzip
 #  become: true
@@ -25,47 +25,41 @@
 #  apt:
 #    name: openvswitch-common
 
-#- name: ensure docker repository key is installed
-#  apt_key:
-#    id: "{{ docker_apt_key_id }}"
-#    keyserver: "{{ docker_apt_keyserver }}"
-#    state: present
-#
-#- name: ensure docker registry is available
-#  apt_repository:
-#    repo: "{{ docker_apt_repo }}"
-#    update_cache: yes
-#    state: present
-#
-#- name: install docker-engine
-#  apt:
-#    name: docker-engine
-#
+- name: install docker
+  apt:
+    name: docker.io
+
 #- name: add user {{ ansible_user }} to docker group
 #  user:
 #    name: "{{ ansible_user }}"
 #    groups: docker
 #    append: yes
-#
-#- name: restart docker service
-#  service:
-#    name: docker
-#    state: restarted
-#
+
+- name: start docker service
+  systemd:
+    name: docker
+    state: started
+
+- name: enable docker service
+  systemd:
+    name: docker
+    enabled: yes
+    masked: no
+
+- name: install docker-py
+  pip:
+    name: docker-py
+
 #- name: get docker compose
 #  get_url:
 #    url: "{{ docker_compose_url }}"
 #    dest: /usr/local/bin/docker-compose
 #    mode: 0755
-#
+
 #- name: install python-pip
 #  apt:
 #    name: python-pip
-#
-#- name: install docker-py
-#  pip:
-#    name: docker-py
-#
+
 #- name: install python-yaml
 #  apt:
 #    name: python-yaml
