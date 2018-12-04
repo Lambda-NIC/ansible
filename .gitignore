@@ -106,5 +106,6 @@ venv.bak/
 # Custom
 .idea/
 .vagrant/
-*keys/*_rsa*
 *.retry
+*keys/
+*.DS_Store
