@@ -1,0 +1,104 @@
+#---
+#
+#- name: remove bridge-utils
+#  become: true
+#  apt:
+#    name: bridge-utils
+#    purge: yes
+#    state: absent
+#
+##- name: remove unzip
+##  become: true
+##  apt:
+##    name: unzip
+##    purge: yes
+##    state: absent
+#
+#- name: remove openvswitch-switch
+#  become: true
+#  apt:
+#    name: openvswitch-switch
+#    purge: yes
+#    state: absent
+#
+#- name: remove openvswitch-common
+#  become: true
+#  apt:
+#    name: openvswitch-common
+#    purge: yes
+#    state: absent
+#
+#- name: remove docker repository key if installed
+#  apt_key:
+#    id: "{{ docker_apt_key_id }}"
+#    keyserver: "{{ docker_apt_keyserver }}"
+#    state: absent
+#
+#- name: remove docker registry if available
+#  apt_repository:
+#    repo: "{{ docker_apt_repo }}"
+#    update_cache: yes
+#    state: absent
+#
+#- name: remove docker-engine
+#  apt:
+#    name: docker-engine
+#    purge: yes
+#    state: absent
+#
+#- name: remove docker compose
+#  file:
+#    path: /usr/local/bin/docker-compose
+#    state: absent
+#
+#- name: remove docker-py
+#  pip:
+#    name: docker-py
+#    state: absent
+#
+#- name: remove python-pip
+#  apt:
+#    name: python-pip
+#    purge: yes
+#    state: absent
+#
+#- name: remove python-yaml
+#  apt:
+#    name: python-yaml
+#    purge: yes
+#    state: absent
+#
+#- name: remove ipvsadm
+#  apt:
+#    name: ipvsadm
+#    purge: yes
+#    state: absent
+#
+#- name: remove fabric
+#  apt:
+#    name: fabric
+#    purge: yes
+#    state: absent
+#
+#- name: remove python-memcache
+#  apt:
+#    name: python-memcache
+#    purge: yes
+#    state: absent
+#
+#- name: remove python-psutil
+#  apt:
+#    name: python-psutil
+#    purge: yes
+#    state: absent
+#
+#- name: remove cpulimit
+#  apt:
+#    name: cpulimit
+#    purge: yes
+#    state: absent
+#
+#- name: update cache
+#  become: true
+#  apt:
+#    update_cache: yes

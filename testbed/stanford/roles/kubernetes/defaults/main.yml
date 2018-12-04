@@ -1,0 +1,33 @@
+---
+
+#docker_apt_key_id: "58118E89F3A912897C070ADBF76221572C52609D"
+#docker_apt_keyserver: "hkp://pgp.mit.edu:80"
+#docker_apt_repo: "deb https://apt.dockerproject.org/repo ubuntu-trusty main"
+#docker_compose_url: "https://github.com/docker/compose/releases/download/1.5.2/docker-compose-Linux-x86_64"
+
+#etcd_version: 3.0.17
+#k8s_version: 1.6.6
+
+#k8s_overlay_tunnel_type: vxlan
+#k8s_overlay_tunnel_size: 1400 # 1500 - 50 -50 (VXLAN header size), as the packet is further tunneled at the VM layer
+#
+#k8s_overlay_subnet_address_prefix: 10.
+#k8s_overlay_subnet_mask: 24
+#k8s_overlay_subnet_mtu_size: "{{ k8s_overlay_tunnel_size }}"
+#
+#k8s_node_address_prefix: 192.168.
+#
+#k8s_etcd_port: 4001
+#k8s_etcd_data_dir: /var/etcd/data
+#
+#k8s_api_server_port: 8080
+#k8s_api_server_service_cluster_ip_range: 172.16.254.1/24
+#
+#k8s_kubectl_url: "http://storage.googleapis.com/kubernetes-release/release/v{{ k8s_version }}/bin/linux/amd64/kubectl"
+#
+#k8s_docker_defautl_config: "/etc/default/docker"
+#
+#k8s_node_dns_nameservers: 10.20.20.1
+#
+#k8s_apps_base_dir: files
+#k8s_apps_scheduler: rr

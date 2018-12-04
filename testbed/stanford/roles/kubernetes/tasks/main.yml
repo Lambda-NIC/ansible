@@ -1,0 +1,34 @@
+---
+
+- name: install common utilities
+  include: roles/kubernetes/tasks/common/install.yml
+  tags: install_common
+
+#- name: remove common utilities
+#  include: roles/kubernetes/tasks/common/remove.yml
+#  tags: remove_common
+
+#- name: create overlay network
+#  include: roles/kubernetes/tasks/networking/overlay/create.yml
+#  tags: create_overlay
+#
+#- name: destroy overlay network
+#  include: roles/kubernetes/tasks/networking/overlay/destroy.yml
+#  tags: destroy_overlay
+#
+#- name: create k8s cluster
+#  include: roles/kubernetes/tasks/cluster/create.yml
+#  tags: create_cluster
+#
+#- name: destroy k8s cluster
+#  include: roles/kubernetes/tasks/cluster/destroy.yml
+#  tags: destroy_cluster
+#
+#- name: create k8s apps
+#  include: roles/kubernetes/tasks/apps/create.yml
+#  tags: create_apps
+#
+#- name: destroy k8s apps
+#  include: roles/kubernetes/tasks/apps/destroy.yml
+#  tags: destroy_apps
+
