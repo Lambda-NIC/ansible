@@ -5,5 +5,5 @@
   gather_facts: true
 
   tasks:
-  - name: ping all mendel servers
+  - name: ping all mendel nodes
     ping:
