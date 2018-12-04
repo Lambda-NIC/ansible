@@ -6,16 +6,16 @@ k8s_apps:
   - name: hello-world
     namespace: default
 
-k8s_master: mendel2
+k8s_master: mendel5
 
 k8s_nodes:
   mendel1:
     type: "minion"
   mendel2:
-    type: "master:minion"
+    type: "minion"
   mendel3:
     type: "minion"
   mendel4:
     type: "minion"
   mendel5:
-    type: "minion"
+    type: "master"

@@ -41,10 +41,27 @@
     path: /usr/local/bin/kubectl
     state: absent
 
-- name: remove /var/lib/kubelet/ directory
-  file:
-    path: /var/lib/kubelet/
-    state: absent
+#- name: remove /var/lib/kubelet/ directory
+#  file:
+#    path: /var/lib/kubelet
+#    state: absent
+
+- name: stop all docker containers
+  shell: docker stop $(docker ps -a -q)
+  ignore_errors: true
+
+- name: remove all docker containers
+  shell: docker rm $(docker ps -a -q)
+  ignore_errors: true
+
+- name: remove all docker images
+  shell: docker rmi $(docker images -q)
+
+- name: clean unused docker containers
+  shell: docker rm -v $(docker ps -a -q -f status=exited)
+
+- name: clean unused docker images
+  shell: docker rmi $(docker images -f “dangling=true” -q)
 
 - name: turn swap on
   command: swapon -a

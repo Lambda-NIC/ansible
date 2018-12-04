@@ -58,7 +58,7 @@
 
 - name: create /var/lib/kubelet/ directory
   file:
-    path: /var/lib/kubelet/
+    path: /var/lib/kubelet
     state: directory
 
 - name: upload kubelet's kubeconfig file
