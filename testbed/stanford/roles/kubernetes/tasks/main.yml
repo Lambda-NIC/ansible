@@ -24,3 +24,10 @@
   include: roles/kubernetes/tasks/apps/destroy.yml
   tags: destroy_apps
 
+- name: install openfaas
+  include: roles/kubernetes/tasks/openfaas/install.yml
+  tags: install_openfaas
+
+- name: remove openfaas
+  include: roles/kubernetes/tasks/openfaas/remove.yml
+  tags: remove_openfaas

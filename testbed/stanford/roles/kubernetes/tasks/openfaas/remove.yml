@@ -1,0 +1,44 @@
+---
+
+#- name: delete openfaas via helm
+#  shell: helm delete openfaas
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+#
+#- name: dete openfaas namespace secret
+#  shell: kubectl -n openfaas delete secret basic_auth
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+#
+#- name: delete openfass to helm repo
+#  shell: helm repo remove openfaas
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+#
+#- name: delete tiller
+#  shell: helm reset
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+#
+#- name: delete tiller cluster role
+#  shell: kubectl delete clusterrolebinding tiller
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+#
+#- name: delete tiller service account
+#  shell: kubectl -n kube-system delete serviceaccount tiller
+#  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: delete openfaas
+  shell: kubectl delete -f /tmp/faas-netes/yaml
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: delete openfaas namespaces
+  shell: kubectl delete -f /tmp/faas-netes/namespaces.yml
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: delete faas-client
+  file:
+    state: absent
+    path: /usr/local/bin/faas*
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: delete faas-nete repo
+  file:
+    state: absent
+    path: /tmp/faas-netes

@@ -1,0 +1,19 @@
+---
+
+- name: get faas-nete repo
+  git:
+    repo: 'https://github.com/openfaas/faas-netes.git'
+    dest: /tmp/faas-netes
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: get faas-client
+  shell: curl -sL https://cli.openfaas.com | sudo sh
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: create openfaas namespaces
+  shell: kubectl apply -f /tmp/faas-netes/namespaces.yml
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
+
+- name: install openfaas
+  shell: kubectl apply -f /tmp/faas-netes/yaml
+  when: '"master" in k8s_nodes[inventory_hostname]["type"]'
