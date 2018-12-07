@@ -21,8 +21,9 @@ TODO: Clean this up into a single repo.
 4. Run `sudo pip install -r requirements.txt` **within kubespray** to get the requirements.
 5. Check `kubespray/inventory/mycluster/hosts.ini` to see if the configuration is correct.
 6. Run `setup.sh` **within kubespray** to get the Kubernetes cluster running.
-7. Then come back to `ansible/testbed/stanford/` and run `setup_openfaas.sh`.
-8. Go into the master machine and run `kubectl get pods --namespace openfaas` to see if it is running correctly!
+7. Make sure to set your login credentials in `/vagrant/testbed/stanford/inventory.ini`.
+8. Then come back to `ansible/testbed/stanford/` and run `setup_openfaas.sh`.
+9. Go into the master machine and run `kubectl get pods --namespace openfaas` to see if it is running correctly!
 
 DONE!
 
