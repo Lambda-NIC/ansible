@@ -31,14 +31,18 @@ It is located in http://<master-ip>:6443. Here are the steps to get into the das
 1. If you are running fresh install of Kubespray, you need to add service account and clusterrolebinding as follows.
   ```
   $ kubectl create serviceaccount dashboard -n default
-  serviceaccount “dashboard” created
   $ kubectl create clusterrolebinding dashboard-admin -n default \
     --clusterrole=cluster-admin \
     --serviceaccount=default:dashboard
-  clusterrolebinding "dashboard-admin" created
   ```
 2. In order to log in, you need to know the token. Retrieve the token as follows.
   ```
   $ kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
   ```
 3. Copy & paste the token and you are in!
+
+## Steps to get into the OpenFaaS main page
+OpenFaaS main page lets you launch custom functions. Simply go into `http://<master-ip>:31119` and start launching!
+
+## Steps to get into the Prometheus page
+Prometheus is a tool to view current cluster statistics. Simply go into `http://mendel5.stanford.edu:31119` and start analyzing!
