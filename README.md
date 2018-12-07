@@ -45,4 +45,4 @@ It is located in http://<master-ip>:6443. Here are the steps to get into the das
 OpenFaaS main page lets you launch custom functions. Simply go into `http://<master-ip>:31119` and start launching!
 
 ## Steps to get into the Prometheus page
-Prometheus is a tool to view current cluster statistics. Simply go into `http://mendel5.stanford.edu:31119` and start analyzing!
+Prometheus is a tool to view current cluster statistics. Simply go into `http://<master-ip>:31119` and start analyzing!
