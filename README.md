@@ -1,8 +1,15 @@
-# Ansible Playbook for getting OpenFaaS working
+# Ansible Playbook for Installing OpenFaaS on Your Cluster
 
 ## Requirements
 * Vagrant
 * Virtualbox
+
+These can be easily installed in Ubuntu via
+```
+sudo apt-get install virtualbox
+sudo apt-get install vagrant
+```
+for other distributions, please refer to your own distribution manual.
 
 ## Steps to get OpenFaaS running
 
