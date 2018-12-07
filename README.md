@@ -24,3 +24,21 @@ DONE!
 1. Go to `ansible/testbed/stanford/` and run `cleanup_openfaas.sh`. 
 2. Go to `kubespray` and run `cleanup.sh`.
 
+## Steps to get into Kubernetes dashboard
+Kubernetes dashboard is a tool where you can view the current status of the nodes, namespaces and pods.
+It is located in http://<master-ip>:6443. Here are the steps to get into the dashboard.
+
+1. If you are running fresh install of Kubespray, you need to add service account and clusterrolebinding as follows.
+  ```
+  $ kubectl create serviceaccount dashboard -n default
+  serviceaccount “dashboard” created
+  $ kubectl create clusterrolebinding dashboard-admin -n default \
+    --clusterrole=cluster-admin \
+    --serviceaccount=default:dashboard
+  clusterrolebinding "dashboard-admin" created
+  ```
+2. In order to log in, you need to know the token. Retrieve the token as follows.
+  ```
+  $ kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+  ```
+3. Copy & paste the token and you are in!
