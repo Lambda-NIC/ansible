@@ -34,7 +34,12 @@ DONE!
 
 ## Steps to get into Kubernetes dashboard
 Kubernetes dashboard is a tool where you can view the current status of the nodes, namespaces and pods.
-It is located in http://<master-ip>:6443. Here are the steps to get into the dashboard.
+It is located in 
+```
+https://<master-ip>:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+```
+
+Here are the steps to get into the dashboard.
 
 1. If you are running fresh install of Kubespray, you need to add service account and clusterrolebinding as follows.
   ```
