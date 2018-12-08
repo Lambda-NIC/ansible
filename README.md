@@ -48,7 +48,7 @@ kubectl proxy --address 0.0.0.0 --port=8001 --accept-hosts='.*' --kubeconfig=/ro
 ```
 Then you can go to the dashboard located in 
 ```
-http://172.24.90.32:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
+http://<master-ip>:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 ```
 
 Here are the steps to get into the dashboard **only if you skipped giving the admin access!**.
