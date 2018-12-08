@@ -34,12 +34,24 @@ DONE!
 
 ## Steps to get into Kubernetes dashboard
 Kubernetes dashboard is a tool where you can view the current status of the nodes, namespaces and pods.
-It is located in 
+First install the dashboard by running
 ```
-https://<master-ip>:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+```
+Then, we give admin access to the dashboard by running the below command in the ansible main directory. **(NOTE: This can cause a security hole!)**
+```
+kubectl create -f dashboard-admin.yaml
+```
+Now, we run the proxy as follows
+```
+kubectl proxy --address 0.0.0.0 --port=8001 --accept-hosts='.*' --kubeconfig=/root/.kube/config
+```
+Then you can go to the dashboard located in 
+```
+http://172.24.90.32:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 ```
 
-Here are the steps to get into the dashboard.
+Here are the steps to get into the dashboard **only if you skipped giving the admin access!**.
 
 1. If you are running fresh install of Kubespray, you need to add service account and clusterrolebinding as follows.
   ```
