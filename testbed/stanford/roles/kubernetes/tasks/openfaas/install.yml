@@ -2,7 +2,7 @@
 
 - name: get faas-nete repo
   git:
-    repo: 'https://github.com/openfaas/faas-netes.git'
+    repo: 'https://github.com/Lambda-NIC/faas-netes.git'
     dest: /tmp/faas-netes
   when: '"master" in k8s_nodes[inventory_hostname]["type"]'
 
