@@ -44,7 +44,7 @@ kubectl create -f dashboard-admin.yaml
 ```
 Now, we run the proxy as follows
 ```
-kubectl proxy --address 0.0.0.0 --port=8001 --accept-hosts='.*' --kubeconfig=/root/.kube/config
+kubectl proxy --address <master-ip> --port=8001 --accept-hosts='.*' --kubeconfig=/root/.kube/config
 ```
 Then you can go to the dashboard located in 
 ```
@@ -67,7 +67,13 @@ Here are the steps to get into the dashboard **only if you skipped giving the ad
 3. Copy & paste the token and you are in!
 
 ## Steps to get into the OpenFaaS main page
-OpenFaaS main page lets you launch custom functions. Simply go into `http://<master-ip>:31119` and start launching!
+OpenFaaS main page lets you launch custom functions. First run the proxy as above and go into
+```
+http://<master-ip>:8001/api/v1/namespaces/openfaas/services/http:gateway:/proxy/ui/
+```
 
 ## Steps to get into the Prometheus page
-Prometheus is a tool to view current cluster statistics. Simply go into `http://<master-ip>:31119` and start analyzing!
+Prometheus is a tool to view current cluster statistics. First run the proxy as above and go into
+```
+http://<master-ip>:8001/api/v1/namespaces/openfaas/services/http:prometheus:/proxy/graph
+```
